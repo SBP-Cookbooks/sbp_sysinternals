@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-default['sysinternals']['url']               = 'http://download.sysinternals.com/files/SysinternalsSuite.zip'
+default['sysinternals']['url']               = 'https://download.sysinternals.com/files/SysinternalsSuite.zip'
 default['sysinternals']['install_dir']       = "#{ENV['SYSTEMDRIVE']}\\SysinternalsSuite"
 default['sysinternals']['bginfo_config_url'] = nil
 default['sysinternals']['bginfo_config_dir'] = nil
