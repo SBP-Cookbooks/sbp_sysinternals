@@ -19,13 +19,13 @@
 
 remote_file "#{Chef::Config[:file_cache_path]}/#{URI.parse(node['sysinternals']['url']).path.split('/')[-1]}" do
   source node['sysinternals']['url']
-  not_if { File.exists?("#{node['sysinternals']['install_dir']}/Bginfo.exe") }
+  not_if { File.exist?("#{node['sysinternals']['install_dir']}/Bginfo.exe") }
 end
 
-archive_file  "#{Chef::Config[:file_cache_path]}/#{URI.parse(node['sysinternals']['url']).path.split('/')[-1]}" do
+archive_file "#{Chef::Config[:file_cache_path]}/#{URI.parse(node['sysinternals']['url']).path.split('/')[-1]}" do
   extract_to node['sysinternals']['install_dir']
   action :extract
-  not_if { File.exists?("#{node['sysinternals']['install_dir']}/Bginfo.exe") }
+  not_if { File.exist?("#{node['sysinternals']['install_dir']}/Bginfo.exe") }
 end
 
 if !node['sysinternals']['bginfo_config_url'].nil? && !node['sysinternals']['bginfo_config_dir'].nil?

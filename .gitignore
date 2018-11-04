@@ -8,6 +8,8 @@
 /test/tmp/
 /test/version_tmp/
 /tmp/
+/.kitchen/
+Berksfile.lock
 
 ## Specific to RubyMotion:
 .dat*

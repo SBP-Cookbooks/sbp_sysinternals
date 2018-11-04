@@ -19,13 +19,13 @@
 
 remote_file "#{Chef::Config[:file_cache_path]}/#{URI.parse(node['sysinternals']['bginfo_config_url']).path.split('/')[-1]}" do
   source node['sysinternals']['bginfo_config_url']
-  not_if { File.exists?("#{node['sysinternals']['bginfo_config_dir']}/config.bgi") }
+  not_if { File.exist?("#{node['sysinternals']['bginfo_config_dir']}/config.bgi") }
 end
 
-archive_file  "#{Chef::Config[:file_cache_path]}/#{URI.parse(node['sysinternals']['bginfo_config_url']).path.split('/')[-1]}" do
+archive_file "#{Chef::Config[:file_cache_path]}/#{URI.parse(node['sysinternals']['bginfo_config_url']).path.split('/')[-1]}" do
   extract_to node['sysinternals']['bginfo_config_dir']
   action :extract
-  not_if { File.exists?("#{node['sysinternals']['bginfo_config_dir']}/config.bgi") }
+  not_if { File.exist?("#{node['sysinternals']['bginfo_config_dir']}/config.bgi") }
 end
 
 windows_auto_run 'BGINFO' do

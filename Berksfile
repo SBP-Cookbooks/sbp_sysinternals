@@ -1,2 +1,5 @@
-source "https://api.berkshelf.com"
+solver :ruby, :required
+
+source 'https://supermarket.chef.io'
+
 metadata
