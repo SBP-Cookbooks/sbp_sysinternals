@@ -17,14 +17,19 @@
 # limitations under the License.
 #
 
-windows_zipfile node['sysinternals']['bginfo_config_dir'] do
+remote_file "#{Chef::Config[:file_cache_path]}/#{URI.parse(node['sysinternals']['bginfo_config_url']).path.split('/')[-1]}" do
   source node['sysinternals']['bginfo_config_url']
-  action :unzip
+  not_if { File.exists?("#{node['sysinternals']['bginfo_config_dir']}/config.bgi") }
+end
+
+archive_file  "#{Chef::Config[:file_cache_path]}/#{URI.parse(node['sysinternals']['bginfo_config_url']).path.split('/')[-1]}" do
+  extract_to node['sysinternals']['bginfo_config_dir']
+  action :extract
   not_if { File.exists?("#{node['sysinternals']['bginfo_config_dir']}/config.bgi") }
 end
 
 windows_auto_run 'BGINFO' do
-  program "#{node['sysinternals']['install_dir']}\\Bginfo.exe"
+  path "#{node['sysinternals']['install_dir']}\\Bginfo.exe"
   args "\"#{node['sysinternals']['bginfo_config_dir']}\\config.bgi\" /NOLICPROMPT /TIMER:0"
   not_if { Registry.value_exists?(AUTO_RUN_KEY, 'BGINFO') }
 end

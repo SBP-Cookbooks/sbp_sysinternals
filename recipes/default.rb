@@ -17,9 +17,14 @@
 # limitations under the License.
 #
 
-windows_zipfile node['sysinternals']['install_dir'] do
+remote_file "#{Chef::Config[:file_cache_path]}/#{URI.parse(node['sysinternals']['url']).path.split('/')[-1]}" do
   source node['sysinternals']['url']
-  action :unzip
+  not_if { File.exists?("#{node['sysinternals']['install_dir']}/Bginfo.exe") }
+end
+
+archive_file  "#{Chef::Config[:file_cache_path]}/#{URI.parse(node['sysinternals']['url']).path.split('/')[-1]}" do
+  extract_to node['sysinternals']['install_dir']
+  action :extract
   not_if { File.exists?("#{node['sysinternals']['install_dir']}/Bginfo.exe") }
 end
 
