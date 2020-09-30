@@ -17,7 +17,7 @@ unless File.directory?('C:\\Program Files (x86)\\Sysinternals Suite')
 
   archive_file zipfile do
     path temppath
-    destination temppath
+    destination node['sysinternals']['temp']
     action :extract
   end
 
