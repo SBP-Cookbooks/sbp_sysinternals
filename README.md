@@ -12,10 +12,10 @@ The attribute default['sysinternals']['bginfo_config_url'] expects a download lo
 if we would include the config.bgi directly file in the cookbook, every user of the cookbook should have to either alter or wrap the cookbook in order to provide
 his/her own version of the config.bgi file.
 
-|default['sysinternals']['url']|<http://download.sysinternals.com/files/SysinternalsSuite.zip>|
-|default['sysinternals']['install_dir']|"#{ENV['SYSTEMDRIVE']}\\SysinternalsSuite"|
-|default['sysinternals']['bginfo_config_url']|<http://local_http_repo/BgInfo.zip>|
-|default['sysinternals']['bginfo_config_dir']|"#{ENV['SYSTEMDRIVE']}\\BgInfo"|
+| default['sysinternals']['url'] | <http://download.sysinternals.com/files/SysinternalsSuite.zip> |
+| default['sysinternals']['install_dir'] | "#{ENV['SYSTEMDRIVE']}\\SysinternalsSuite" |
+| default['sysinternals']['bginfo_config_url'] | <http://local_http_repo/BgInfo.zip> |
+| default['sysinternals']['bginfo_config_dir'] | "#{ENV['SYSTEMDRIVE']}\\BgInfo" |
 
 ## Usage
 
