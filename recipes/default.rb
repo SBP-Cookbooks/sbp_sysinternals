@@ -23,5 +23,5 @@ unless File.directory?('C:\\Program Files (x86)\\Sysinternals Suite')
 end
 
 if node['sysinternals'].key?('bginfo_config_url') && node['sysinternals'].key?('bginfo_config_dir')
-  include_recipe "#{cookbook_name}::bginfo"
+  include_recipe '::bginfo'
 end
