@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: sbp_sysinternals
+# Cookbook:: sbp_sysinternals
 # Recipe:: bginfo
 #
-# Copyright 2014, Schuberg Philis
+# Copyright:: 2014, Schuberg Philis
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,10 +17,20 @@
 # limitations under the License.
 #
 
-windows_zipfile node['sysinternals']['bginfo_config_dir'] do
-  source node['sysinternals']['bginfo_config_url']
-  action :unzip
-  not_if { File.exists?("#{node['sysinternals']['bginfo_config_dir']}/config.bgi") }
+unless File.exist?("#{node['sysinternals']['bginfo_config_dir']}/config.bgi")
+  zipfile = File.basename(node['sysinternals']['bginfo_config_url'])
+  temppath = "#{node['sysinternals']['temp']}\\#{zipfile}"
+
+  remote_file temppath do
+    source node['sysinternals']['bginfo_config_url']
+    action :create
+  end
+
+  archive_file zipfile do
+    path temppath
+    destination node['sysinternals']['bginfo_config_dir']
+    action :extract
+  end
 end
 
 windows_auto_run 'BGINFO' do
