@@ -1,28 +1,34 @@
 #
-# Cookbook Name:: sbp_sysinternals
+# Cookbook:: win_sysinternals
 # Recipe:: default
 #
-# Copyright 2014, Schuberg Philis
+# Copyright:: 2020, Schuberg Philis B.V.
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# All rights reserved - Do Not Redistribute
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
+unless File.directory?('C:\\Program Files (x86)\\Sysinternals Suite')
+  zipfile = File.basename(node['sysinternals']['url'])
+  temppath = "#{node['sysinternals']['temp']}\\#{zipfile}"
 
-windows_zipfile node['sysinternals']['install_dir'] do
-  source node['sysinternals']['url']
-  action :unzip
-  not_if { File.exists?("#{node['sysinternals']['install_dir']}/Bginfo.exe") }
+  remote_file temppath do
+    source node['sysinternals']['url']
+    action :create
+  end
+
+  archive_file zipfile do
+    path temppath
+    destination temppath
+    action :extract
+  end
+
+  windows_package 'SysinternalsSuite' do
+    source "#{node['sysinternals']['temp']}\\SysinternalsSuite\\SysinternalsSuiteSetup.exe"
+    options '/SILENT'
+    installer_type :custom
+    action :install
+  end
 end
 
-if !node['sysinternals']['bginfo_config_url'].nil? && !node['sysinternals']['bginfo_config_dir'].nil?
-  include_recipe 'sbp_sysinternals::bginfo'
+unless node['sysinternals']['bginfo_config_url'].nil? || node['sysinternals']['bginfo_config_dir'].nil?
+  include_recipe "#{cookbook_name}::bginfo"
 end
