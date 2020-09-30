@@ -17,15 +17,8 @@ unless File.directory?('C:\\Program Files (x86)\\Sysinternals Suite')
 
   archive_file zipfile do
     path temppath
-    destination node['sysinternals']['temp']
+    destination node['sysinternals']['install_dir']
     action :extract
-  end
-
-  windows_package 'SysinternalsSuite' do
-    source "#{node['sysinternals']['temp']}\\SysinternalsSuite\\SysinternalsSuiteSetup.exe"
-    options '/SILENT'
-    installer_type :custom
-    action :install
   end
 end
 
