@@ -36,5 +36,5 @@ end
 windows_auto_run 'BGINFO' do
   program "#{node['sysinternals']['install_dir']}\\Bginfo.exe"
   args "\"#{node['sysinternals']['bginfo_config_dir']}\\config.bgi\" /NOLICPROMPT /TIMER:0"
-  not_if { Registry.value_exists?(AUTO_RUN_KEY, 'BGINFO') }
+  not_if { Registry.value_exists?('`HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run', 'BGINFO') }
 end
