@@ -18,6 +18,7 @@ unless File.directory?('C:\\Program Files (x86)\\Sysinternals Suite')
   archive_file zipfile do
     path temppath
     destination node['sysinternals']['install_dir']
+    overwrite :auto
     action :extract
   end
 end
