@@ -29,6 +29,7 @@ unless File.exist?("#{node['sysinternals']['bginfo_config_dir']}/config.bgi")
   archive_file zipfile do
     path temppath
     destination node['sysinternals']['bginfo_config_dir']
+    overwrite :auto
     action :extract
   end
 end
