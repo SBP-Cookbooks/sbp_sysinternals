@@ -47,6 +47,10 @@ jobs:
           ssh-private-key: ${{ secrets.CI_SSH_PRIVATE_KEY }}
       - name: Install Chef
         uses: actionshub/chef-install@main
+        with:
+          channel: stable
+          project: chef-workstation
+          version: 20.11.180
       - name: Release
         run: |
           if git tag | grep -q v$(grep "^version" metadata.rb | awk '{print $2}' | sed s/\'//g); then
